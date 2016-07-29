@@ -19,6 +19,9 @@ module DeviseAuthy
 
       def require_token?
         id = warden.session(resource_name)[:id]
+        if cookies.signed[:remember_device].nil?
+          return true
+        end
         cookie = JSON.parse(cookies.signed[:remember_device])
         if cookie.present? &&
           (Time.now.to_i - cookie['expires'].to_i) < \
