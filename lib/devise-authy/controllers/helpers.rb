@@ -16,6 +16,10 @@ module DeviseAuthy
           :expires => resource_class.authy_remember_device.from_now
         }
       end
+      
+      def forget_device
+        cookies.delete :remember_device
+      end
 
       def require_token?
         id = warden.session(resource_name)[:id]
